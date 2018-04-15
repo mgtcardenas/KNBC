@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public final class Utils {
 
-    public static final String EXAMPLES_FILE = "Examples.csv";
+    public static final String EXAMPLES_FILE = "ExamplesII.csv";
 
     public static String getKin(String line) {
 
@@ -22,7 +22,10 @@ public final class Utils {
 
         String example;
 
-        example = line.substring(line.indexOf(',') + 1, line.length() - 3);
+        example = line.substring(line.indexOf(',') + 1, line.length());
+        example = example.replaceAll("<p>", "");
+        example = example.replaceAll("</p>", "");
+        example = example.replaceAll(",,,", "");
         example = example.toLowerCase();
 
         return example;
@@ -33,22 +36,37 @@ public final class Utils {
 
         String test;
 
-        test = line.substring(line.indexOf(',') + 1, line.length() - 3);
+        test = line.substring(line.indexOf(',') + 1, line.length());
+        test = test.replaceAll("<p>", "");
+        test = test.replaceAll("</p>", "");
+        test = test.replaceAll(",,,", "");
         test = test.toLowerCase();
 
         return test;
 
     }//end getTest
 
-    public static String[] getWords(String example) {
+    public static String[] getWords(String example){
 
         String[] words;
+        String tempExample;
 
-        words = example.split(" ");
+        words = null;
+
+        example     = example.toLowerCase();
+        tempExample = example.replaceAll("<p>", "");
+        tempExample = tempExample.replaceAll("</p>", "");
+        words       = tempExample.split("\\W+");
 
         return words;
 
     }//end getWords
+
+    public static void ignoreFirstLine(BufferedReader br) throws IOException, FileNotFoundException{
+
+        br.readLine();
+
+    }//end ignoreFirstLine
 
     public static int countNumLines() throws IOException, FileNotFoundException{
         

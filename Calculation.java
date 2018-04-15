@@ -25,6 +25,9 @@ public class Calculation {
             kin  = Utils.getKin(line);
             test = Utils.getTest(line);
 
+            /*CHECK THAT IT IS READING THE TESTS CORRECTLY*/
+            // System.out.println(test);
+
             setProbability(test);
             predict();
 
@@ -56,6 +59,9 @@ public class Calculation {
         
             kin  = Utils.getKin(line);
             test = Utils.getTest(line);
+
+            /*CHECK THAT IT IS READING THE TESTS CORRECTLY*/
+            // System.out.println(test);
 
             setProbability(test);
             predict();
@@ -104,13 +110,13 @@ public class Calculation {
             }//end while (words in kins)
 
             /*THIS IS FOR CHECKING THAT TOTAL NUMBER OF WORDS IN KIN IS CORRECT*/
-            //System.out.println("Words in "+ kin + ": " + numKinWords);
+            // System.out.println("Words in "+ kin + ": " + numKinWords);
 
             //Prepare first value of probability
             probability = (double) Lesson.kinsTable.get(kin)/ (double) Lesson.examples;
 
             //Calculate probabilities of each word, therefore, get the words as an array
-            testWords = test.split(" ");
+            testWords = Utils.getWords(test);
             
             for (String w : testWords) {
                 if (Lesson.vocabulary.contains(w)) {
@@ -167,6 +173,8 @@ public class Calculation {
         fr          = new FileReader(filePath);
         br          = new BufferedReader(fr);
         successRate = 0;
+
+        Utils.ignoreFirstLine(br);
 
         switch (r) {
             case FIRST:

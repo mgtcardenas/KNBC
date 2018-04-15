@@ -158,7 +158,9 @@ public class Lesson {
         linksTable  = new Hashtable<>();
         wordsTables = new ArrayList<>();
 
-        kinIndex = 0;
+        kinIndex    = 0;
+        
+        Utils.ignoreFirstLine(br);
 
         switch (r) {
             case FIRST:
