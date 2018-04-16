@@ -115,9 +115,17 @@ public class Calculation {
             //Prepare first value of probability
             probability = (double) Lesson.kinsTable.get(kin)/ (double) Lesson.examples;
 
+            /*CHECK THAT PROBABILITY IS FINE BEFORE CALCULATIONS*/
+            // System.out.println("Probability of " + kin + ": " + probability);
+
             //Calculate probabilities of each word, therefore, get the words as an array
             testWords = Utils.getWords(test);
-            
+
+            /*CHECK THAT THE WORDS ARE CORRECT */
+            // for (String w : testWords) {
+            //     System.out.println(w);
+            // }//end for
+
             for (String w : testWords) {
                 if (Lesson.vocabulary.contains(w)) {
 
@@ -132,6 +140,8 @@ public class Calculation {
                 }//end if-else (¿Word is in the vocabulary?)
             }//end for
 
+            /*CHECK THAT THE PROBABILITIES ARE NOT 0*/
+            // System.out.println("Probability of " + kin + ": " + probability);
             probabilitiesTable.put(kin, probability);
 
         }//end while - (kins)
@@ -154,8 +164,12 @@ public class Calculation {
 
             kin     = (String) kins.nextElement();
 
+            /*CHECK THAT THE PROBABILITIES ARE NOT 0*/
+            // System.out.println("Probability of " + kin + ": " + probabilitiesTable.get(kin));
+
             if (probabilitiesTable.get(kin) > biggest) {
                 biggest = probabilitiesTable.get(kin);
+                
                 pred    = kin;
             }//end if (¿Is there a new champion?)
 

@@ -1,5 +1,5 @@
-v1,v2,,,
-spam,<p>more simple,,,</p>
-ham,<p>A sentence,,,</p>
-ham,<p>sentence,,,</p>
-spam,<p>hello,,,</p>
+type,email
+Spam,<p>more simple,,,</p>
+Ham,<p>A sentence,,,</p>
+Ham,<p>sentence,,,</p>
+Spam,<p>hello,,,</p>

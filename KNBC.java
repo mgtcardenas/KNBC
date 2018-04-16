@@ -21,7 +21,7 @@ public class KNBC {
             // System.out.println(Lesson.wordsTables.get(0).get("sentence"));
             // System.out.println(Lesson.kinsTable.get("spam")+" + "+Lesson.kinsTable.get("ham")+" = "+Lesson.examples);
             // System.out.println(Lesson.vocabulary);
-            //System.out.println("# Times 'sentence' appears in ham : "+Lesson.wordsTables.get(1).get("sentence"));
+            // System.out.println("# Times 'sentence' appears in ham : "+Lesson.wordsTables.get(1).get("sentence"));
 
             successRate             = Calculation.getSuccessRate(Utils.EXAMPLES_FILE, chunkSize, round);
             accumulatedSuccessRate += successRate;
