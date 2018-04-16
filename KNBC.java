@@ -1,6 +1,21 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/*DEBUGGING NOTES:
+
+I found out that the lesson works just fine, it fills the tables as it must,
+but the problem resides in Calculation.setProbability when it comes to making the calculation
+before even putting it in the table, it is already 0. It is important to note that the probability 
+before making such calculation is fine and correct. This leads me to think that maybe a double is not enough...
+
+1. Make another check case. That is, create a relatively small Examples.csv file and compute the probability by hand
+    If you end up with the same probability number as your program, then...
+
+2. Learn more about the nature of double numbers. Actually know their limit. Omar says it is improbable, but
+    I think there are just too many words per example in this new file.
+
+*/
+
 public class KNBC {
 
     public static void main(String[] args) throws IOException, FileNotFoundException{
