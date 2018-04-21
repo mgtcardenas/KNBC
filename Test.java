@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-public class Calculation {
+public class Test {
 
     static public String                    prediction;
     static Hashtable<String, Double> probabilitiesTable; // Probabilities Table -> The probability that Test is any kin
@@ -29,7 +29,7 @@ public class Calculation {
             // System.out.println(test);
 
             setProbability(test);
-            predict();
+            setPrediction();
 
             if (kin.equals(prediction)) {
                 successes++;
@@ -64,7 +64,7 @@ public class Calculation {
             // System.out.println(test);
 
             setProbability(test);
-            predict();
+            setPrediction();
 
             if (kin.equals(prediction)) {
                 successes++;
@@ -93,7 +93,7 @@ public class Calculation {
         probabilitiesTable  = new Hashtable<>();
     
         // Cycle through all kins to compute each of their respective probabilities in respect to Test
-        kins = Lesson.kinsTable.keys();
+        kins = Training.kinsTable.keys();
 
         while (kins.hasMoreElements()) {
 
@@ -101,19 +101,19 @@ public class Calculation {
             numKinWords = 0;
             
             // Get the number of total words (even repeated), n for each kin. Here numKinWords
-            kinWords = Lesson.wordsTables.get(Lesson.linksTable.get(kin)).keys();
+            kinWords = Training.wordsTables.get(Training.linksTable.get(kin)).keys();
 
             while (kinWords.hasMoreElements()) {
                 word           = (String) kinWords.nextElement();
                 // System.out.println("Word: "+ word + " in kin: " + kin + " is # times: " + Lesson.wordsTables.get(Lesson.linksTable.get(kin)).get(word));
-                numKinWords   += Lesson.wordsTables.get(Lesson.linksTable.get(kin)).get(word);
+                numKinWords   += Training.wordsTables.get(Training.linksTable.get(kin)).get(word);
             }//end while (words in kins)
 
             /*THIS IS FOR CHECKING THAT TOTAL NUMBER OF WORDS IN KIN IS CORRECT*/
             // System.out.println("Words in "+ kin + ": " + numKinWords);
 
             //Prepare first value of probability
-            probability = (double) Lesson.kinsTable.get(kin)/ (double) Lesson.examples;
+            probability = Math.log(Training.kinsTable.get(kin)) - Math.log(Training.examples);
 
             /*CHECK THAT PROBABILITY IS FINE BEFORE CALCULATIONS*/
             // System.out.println("Probability of " + kin + ": " + probability);
@@ -127,16 +127,16 @@ public class Calculation {
             // }//end for
 
             for (String w : testWords) {
-                if (Lesson.vocabulary.contains(w)) {
+                if (Training.vocabulary.contains(w)) {
 
-                    if (Lesson.wordsTables.get(Lesson.linksTable.get(kin)).containsKey(w)) {
-                        probability *=  (double) (Lesson.wordsTables.get(Lesson.linksTable.get(kin)).get(w) + 1) / (double) ( numKinWords + Lesson.vocabulary.size() );
+                    if (Training.wordsTables.get(Training.linksTable.get(kin)).containsKey(w)) {
+                        probability +=  Math.log(Training.wordsTables.get(Training.linksTable.get(kin)).get(w) + 1) - Math.log( numKinWords + Training.vocabulary.size() );
                     } else {
-                        probability *= (double) 1.0 / (double) ( numKinWords + Lesson.vocabulary.size() );
+                        probability += Math.log(1.0) - Math.log( numKinWords + Training.vocabulary.size() );
                     }//end if-else (¿Word is in kin's known words?)
 
                 } else {
-                    probability *= (double) 0.001 / (double) ( numKinWords + Lesson.vocabulary.size() );
+                    probability += Math.log(0.001) - Math.log( numKinWords + Training.vocabulary.size() );
                 }//end if-else (¿Word is in the vocabulary?)
             }//end for
 
@@ -148,7 +148,7 @@ public class Calculation {
   
     }//end setProbability
 
-    private static void predict() {
+    private static void setPrediction() {
         
         // Get the Biggest Probability
         Enumeration kins;
@@ -158,7 +158,7 @@ public class Calculation {
         kins        = probabilitiesTable.keys();
         kin         = "";
         pred        = "";
-        biggest     = 0;
+        biggest     = - Double.MAX_VALUE;
 
         while (kins.hasMoreElements()) {
 
@@ -166,9 +166,13 @@ public class Calculation {
 
             /*CHECK THAT THE PROBABILITIES ARE NOT 0*/
             // System.out.println("Probability of " + kin + ": " + probabilitiesTable.get(kin));
+            
 
             if (probabilitiesTable.get(kin) > biggest) {
                 biggest = probabilitiesTable.get(kin);
+
+                /*CHECK THAT THE BIGGEST PROBABILITY IS CORRECT */
+                // System.out.println("The biggest now is: " + biggest);
                 
                 pred    = kin;
             }//end if (¿Is there a new champion?)
@@ -176,7 +180,8 @@ public class Calculation {
         }//end while
 
         prediction = pred;
-    }//end predict
+        // System.out.println("My prediction is: " + prediction);
+    }//end setPrediction
 
     public static double getSuccessRate(String filePath, int chunkSize, Round r) throws FileNotFoundException, IOException{
         
@@ -225,14 +230,8 @@ public class Calculation {
             
         }//end switch
 
-        /* Everything below this will be part of the testLines methods.
-           One of them will use a for loop and will receive a number of lines to be tested.
-           The other will use a while loop for testing till the end of file.
-           getSuccessRate must read the file, since it must skip parts of it, depending the case.
-           */
-
         return successRate;
 
     }//end getSuccessRate
 
-}//end Calculation
+}//end Test

@@ -7,7 +7,7 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Hashtable;
 
-public class Lesson {
+public class Training {
 
     static int                                   kinIndex;
     static long                                  examples;   // Total number of exmaples (aka files or lines in this case)
@@ -128,7 +128,7 @@ public class Lesson {
 
     }//end learRestOfFile
 
-    public static void count() {
+    public static void setNumExamples() {
 
         Enumeration kins;
         String      kin;
@@ -143,9 +143,9 @@ public class Lesson {
             examples += kinsTable.get(kin);
         }//end while
         
-    }//end Count
+    }//end setNumExamples
     
-    public static void fillTables(String filePath, int chunkSize,Round r) throws IOException, FileNotFoundException{
+    public static void train(String filePath, int chunkSize,Round r) throws IOException, FileNotFoundException{
 
         FileReader      fr;
         BufferedReader  br;
@@ -198,8 +198,8 @@ public class Lesson {
 
         }//end switch
 
-    }//end populateTables
+        setNumExamples();
 
-    
+    }//end train
 
-}//end Learn
+}//end Training

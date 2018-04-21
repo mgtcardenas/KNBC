@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public final class Utils {
 
-    public static final String EXAMPLES_FILE = "ExamplesII_Test.csv";
+    public static final String EXAMPLES_FILE = "Files/Tweets.csv";
 
     public static String getKin(String line) {
 
